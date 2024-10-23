@@ -207,7 +207,7 @@ function upgrade_bison() {
 # packages needed for Linux/Ubuntu distro
 function main_ubuntu() {
   sudo apt-get update
-  install_package python-pip
+  install_package python3-pip
 
   type pip >/dev/null 2>&1 || {
     fail "Could not find pip. please install it using 'sudo easy_install pip'";
@@ -246,6 +246,10 @@ function main_debian() {
   install_package libtool
   install_package g++
   install_package cmake
+  install_package automake
+  install_package sed
+  install_package coreutils
+  install_package pkg-config
   install_package libgmp-dev
   install_package libssl-dev
   install_package bison
@@ -253,6 +257,7 @@ function main_debian() {
   install_package unzip
   install_package libglib2.0-dev
   install_package doxygen
+  install_package python3
   install_package python3-setuptools
   install_package python3-dev
   install_package python3-pip
@@ -260,7 +265,6 @@ function main_debian() {
   install_package npm
   upgrade_cmake
   upgrade_bison
-
   sudo ldconfig
 }
 
@@ -337,8 +341,8 @@ function main() {
     return 0
   fi
 
-  mkdir $ZROOT/bin
-  ln -s $(which bison) $ZROOT/bin/bison
+  sudo mkdir $ZROOT/bin
+  sudo ln -s $(which bison) $ZROOT/bin/bison
 
   if [[ $OS = "ubuntu" ]]; then
     log "Detected Ubuntu ($OS_VERSION)"
